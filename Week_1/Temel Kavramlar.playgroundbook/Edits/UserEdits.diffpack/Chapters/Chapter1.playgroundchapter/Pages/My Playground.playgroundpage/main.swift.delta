@@ -37,6 +37,7 @@ print("pi is \(pi)")
 
 print("pi is \(Double(pi))")
 
+//---------------------------------------------------------
 //Collections
 
 //Array
@@ -54,18 +55,115 @@ print(languages)
 print(languages1)
 print(languages2)
 
+//---------------------------------------------------------
 //Dictionary
 
 var platformsAndLanguages:[String: String] = ["iOS" : "Swift", "Android" : "Kotlin"]
 
 platformsAndLanguages["Flutter"] = "Dart"
 
+//let filteredValue = platformsAndLanguages.filter {
+//    key, value in value == "Dart"
+//}
+
+let filteredValue = platformsAndLanguages.filter {$1 == "Dart"}
+
+print(filteredValue)
+
 platformsAndLanguages.removeValue(forKey: "iOS")
 
 print(platformsAndLanguages)
+
+//---------------------------------------------------------
+//Control Flow, Funtinos
+
+let isActive = false
+
+if isActive {
+    print("Active")
+}
+else{
+    print("Not Active")
+}
+
+//for index in 0..&lt;10{
+//    print(index)
+//}
+
+for language in languages1 where language as! String == "C++" {
+    print(language)
+}
+
+//for index1 in (0...10).reversed(){
+//    print(index1)
+//}
+var index = 0
+while index &gt; 0 {
+    print(index)
+    index -= 1
+}
+
+languages.forEach {item in print(item)}
+
+var digits = [0,1,2,3]
+
+digits = digits.map {$0 + 1}
+
+print(digits)
+
+//functions
+var increaseDigits:[Int] {
+    var digits = [0,1,2,3]
+    digits = digits.map {$0 + 1}
+    return digits
+}
+print(increaseDigits)
+
+
+var digits1 = [0,1,2,3]
+func increaseDigits(_ digits: [Int])-&gt; [Int] {
+    return digits.map {$0 + 1}
+}
+
+//print(increaseDigits(digits: digits1))
+print(increaseDigits(digits1))
+
+
+//---------------------------------------------------------
+//Enum, Struct and Class
+
+enum PatikaAPI {
+    case getLesson(id: String)
+    case getUsers
+    
+    var endPoints: String {
+        switch self {
+        case .getLesson:
+            return "/get-lesson"
+        case .getUsers: 
+            return "/get-Users"
+        }
+    }
+    
+    var parameters: [String: Any] {
+        switch self {
+        case .getLesson(let id):
+            return ["id":id]
+        case .getUsers:
+            return ["email" : "deneme@gmail.com"]
+        }
+        
+    }
+}
+
+//struct -&gt; Value Type (Microsoft Excel)
+//class -&gt; Referance Type (Google Sheets)
+
+
+
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 893}</string>
+			<string>{0, 2717}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
