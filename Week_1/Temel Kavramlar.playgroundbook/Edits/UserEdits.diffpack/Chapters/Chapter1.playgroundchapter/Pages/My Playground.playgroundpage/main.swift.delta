@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Diff</key>
+	<array>
+		<dict>
+			<key>ModifiedContent</key>
+			<string>//Değişken ve Sabitler
+
+//let name = "Ehlullah"
+var name: String = "Ehlullah"
+var prettyName:String {
+    get {
+        return "Hello, \(name)!"
+    }
+    set {
+        name = "Hello, \(newValue)"
+    }
+}
+
+prettyName = "Ayşe"
+
+print("\(prettyName)!")
+
+//let pi: Double = 3.14
+
+let pi: Float = 3.14
+
+print("Hello, \(name)!")
+
+name = "Ali"
+
+print("Hello, \(name)!")
+
+print("pi is \(pi)")
+
+print("pi is \(Double(pi))")
+
+//Collections
+
+//Array
+let languages: [String]=["C","C++","C#"]
+
+let languages1 = ["C","C++","C#"]
+
+var languages2:[Any]=["C","C++","C#",75]
+
+languages2.append("Swift")
+
+languages2.remove(at: .zero)
+
+print(languages)
+print(languages1)
+print(languages2)
+
+//Dictionary
+
+var platformsAndLanguages:[String: String] = ["iOS" : "Swift", "Android" : "Kotlin"]
+
+platformsAndLanguages["Flutter"] = "Dart"
+
+platformsAndLanguages.removeValue(forKey: "iOS")
+
+print(platformsAndLanguages)
+</string>
+			<key>ModifiedRange</key>
+			<string>{0, 893}</string>
+			<key>OriginalContent</key>
+			<string></string>
+			<key>OriginalRange</key>
+			<string>{0, 0}</string>
+		</dict>
+	</array>
+	<key>File</key>
+	<string>Chapters/Chapter1.playgroundchapter/Pages/My Playground.playgroundpage/main.swift</string>
+</dict>
+</plist>
