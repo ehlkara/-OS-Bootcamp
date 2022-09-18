@@ -159,9 +159,10 @@ enum PatikaAPI {
 //struct -&gt; Value Type (Microsoft Excel)
 //class -&gt; Referance Type (Google Sheets)
 
+//Note: Devamı x code projesinde!
 </string>
 			<key>ModifiedRange</key>
-			<string>{0, 2715}</string>
+			<string>{0, 2749}</string>
 			<key>OriginalContent</key>
 			<string></string>
 			<key>OriginalRange</key>
