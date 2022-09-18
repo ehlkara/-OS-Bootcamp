@@ -7,11 +7,25 @@
 
 import Foundation
 
-struct User {
-    var id:String
-    var username:String
-    let age: Int
+// MARK: Enumerations, Structures and Classes
+
+protocol Profilable {
+    var id: String {get set}
+    var username: String {get set}
+    var age: Int {get set}
+}
+
+struct User: Profilable {
+    var id:String = "-"
+    var username:String = "-"
+    var age: Int = 0
     
+    init() {
+        id="-"
+        username = "-"
+        age = 0
+    }
+
     init(id: String, username: String, age:Int){
         self.id = id
         self.username = username
@@ -27,6 +41,16 @@ struct User {
 //struct AdminUser : User {
 //
 //}
+
+struct AdminUser: Profilable {
+    var id: String
+    
+    var username: String
+    
+    var age: Int
+    
+    
+}
 
 class Programmer: Equatable {
     
@@ -58,7 +82,8 @@ class Programmer: Equatable {
    
 }
 
-class iOSProgrammer: Programmer {
+class iOSProgrammer:Programmer{
+    
     override init(expert: String, experience: Int = 0) {
         super.init(expert: expert, experience: experience)
     }
@@ -99,3 +124,97 @@ if programmer == secondProgrammer
 else {
     print("Not equal")
 }
+
+
+//-------------------------------------------------------
+// MARK: - Optional
+var tamsayi: Int?
+
+tamsayi = 5
+
+func unwrapTamsayi()->Int {
+    guard let tamsayi = tamsayi else { // tamsayi != nil
+     fatalError("Tamsayi unwrap edilemedi.")
+    }
+    return tamsayi
+}
+
+//@IBOutlet weak var button: UIButton
+let unwrappedTamsayi = unwrapTamsayi()
+print(unwrappedTamsayi)
+
+let fruits = ["apple","strawberry"]
+
+let result = fruits.firstIndex(of: "apple")
+
+print(result)
+
+// MARK: - Error Handling
+
+enum NetworkError: Error, LocalizedError {
+    case noInternetConnection
+    case timeOut
+    case userNotFound
+    
+    var errorDescription: String?{
+        switch self {
+        case .userNotFound:
+            return "User not Found"
+        default:
+            return ""
+        }
+    }
+}
+
+//extension NetworkError: LocalizedError {
+//    var errorDescription: String?{
+//        switch self {
+//        case .userNotFound:
+//            return "User not Found"
+//        default:
+//            return ""
+//        }
+//    }
+//}
+
+func fetchUser(_ user: User?) throws -> User {
+    guard let user = user else {
+        throw NetworkError.userNotFound
+    }
+    return user
+}
+
+do {
+    let user = try fetchUser(firstUser)
+    print(user)
+} catch(let error) {
+    print(error.localizedDescription)
+}
+
+// MARK: - Protocol
+
+class Profile {
+    var user: Profilable
+    
+    init(user: Profilable) {
+        self.user = user
+    }
+    
+    func printProfile() {
+        print("***************")
+        print("ID \(user.id)")
+        print("USERNAME \(user.username)")
+        print("AGE \(user.age)")
+        print("***************")
+    }
+}
+
+let userProfile = Profile(user: firstUser)
+
+userProfile.printProfile()
+
+let adminUser = AdminUser(id: "123675", username: "Steve", age: 5)
+
+let adminProfile = Profile(user: adminUser)
+
+adminProfile.printProfile()
