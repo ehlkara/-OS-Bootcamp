@@ -25,7 +25,7 @@ struct User: Profilable {
         username = "-"
         age = 0
     }
-
+    
     init(id: String, username: String, age:Int){
         self.id = id
         self.username = username
@@ -79,7 +79,7 @@ class Programmer: Equatable {
     static func printId() {
         print(id)
     }
-   
+    
 }
 
 class iOSProgrammer:Programmer{
@@ -134,7 +134,7 @@ tamsayi = 5
 
 func unwrapTamsayi()->Int {
     guard let tamsayi = tamsayi else { // tamsayi != nil
-     fatalError("Tamsayi unwrap edilemedi.")
+        fatalError("Tamsayi unwrap edilemedi.")
     }
     return tamsayi
 }
@@ -222,100 +222,175 @@ adminProfile.printProfile()
 
 //-------------------------------------------------------
 // MARK: - Generics
-
-protocol Provider{
-    var baseUrl: String{get}
-    var endPoint: String{get}
-    var parameters: [String:String] {get}
-}
-
-enum InstagramProvider{
-    case getRecentPosts
-    case getProfile
-    case search(text: String)
-    
-    init?() {
-        self.init(rawValue: "/getProfile")
-    }
-}
-
-extension InstagramProvider:RawRepresentable{
-    typealias RawValue =  String
-    
-    var rawValue: RawValue {
-        endPoint
-    }
-    init?(rawValue: RawValue) {
-        self.init()
-        switch rawValue {
-        case "/getRecentPosts":
-            self = .getRecentPosts
-        case "/getProfile":
-            self = .getProfile
-        default:
-            break
-        }
-    }
-}
-
-extension InstagramProvider:Provider {
-    var baseUrl: String {
-        "https://instagram.com"
-    }
-    
-    var endPoint: String {
-        switch self {
-        case .getProfile:
-            return "/getProfile"
-        case .getRecentPosts:
-            return "/getRecentPhotos"
-        case .search:
-            return "/search"
-        }
-    }
-    
-    var parameters: [String : String] {
-        [:]
-    }
-}
-
-let instaProvider = InstagramProvider()
-
-class NetworkProvider<P: RawRepresentable> {
-    let provider: P
-    
-    init(provider: P){
-        self.provider = provider
-    }
-    
-    func performRequest(_ request:P){
-        print(request.rawValue)
-    }
-}
-
-let networkProvider = NetworkProvider<InstagramProvider>(provider: instaProvider!)
-
-networkProvider.performRequest(.getProfile)
+//
+//protocol Provider{
+//    var baseUrl: String{get}
+//    var endPoint: String{get}
+//    var parameters: [String:String] {get}
+//}
+//
+//enum InstagramProvider{
+//    case getRecentPosts
+//    case getProfile
+//    case search(text: String)
+//
+//    init?() {
+//        self.init(rawValue: "/getProfile")
+//    }
+//}
+//
+//extension InstagramProvider:RawRepresentable{
+//    typealias RawValue =  String
+//
+//    var rawValue: RawValue {
+//        endPoint
+//    }
+//    init?(rawValue: RawValue) {
+//        self.init()
+//        switch rawValue {
+//        case "/getRecentPosts":
+//            self = .getRecentPosts
+//        case "/getProfile":
+//            self = .getProfile
+//        default:
+//            break
+//        }
+//    }
+//}
+//
+//extension InstagramProvider:Provider {
+//    var baseUrl: String {
+//        "https://instagram.com"
+//    }
+//
+//    var endPoint: String {
+//        switch self {
+//        case .getProfile:
+//            return "/getProfile"
+//        case .getRecentPosts:
+//            return "/getRecentPhotos"
+//        case .search:
+//            return "/search"
+//        }
+//    }
+//
+//    var parameters: [String : String] {
+//        [:]
+//    }
+//}
+//
+//let instaProvider = InstagramProvider()
+//
+//class NetworkProvider<P: RawRepresentable> {
+//    let provider: P
+//
+//    init(provider: P){
+//        self.provider = provider
+//    }
+//
+//    func performRequest(_ request:P){
+//        print(request.rawValue)
+//    }
+//}
+//
+//let networkProvider = NetworkProvider<InstagramProvider>(provider: instaProvider!)
+//
+//networkProvider.performRequest(.getProfile)
 
 //-------------------------------------------------------
 // MARK: - Closure, Delegate, Notification Center
 
+protocol ButtonDelegate: AnyObject {
+    func didTapButton(_ sender: Button)
+    func didUnTapButton(_ sender: Button)
+}
+
 class Button {
-var isTapped: Bool = false
+    
+    var delegate: ButtonDelegate?
+    
+    var didTapped: (() -> Void)?
+    
+    var isTapped: Bool = false {
+        didSet{
+            didTapped?()
+        }
+    }
     
     func tap () {
         isTapped = true
+        delegate?.didTapButton(self)
+        NotificationCenter.default.post(name: NSNotification.Name("buttonTapped"), object: nil)
     }
     
     func untap() {
         isTapped = false
+        delegate?.didUnTapButton(self)
+        NotificationCenter.default.post(name: NSNotification.Name("buttonUnTapped"), object: nil)
+    }
+    
+    func didActive(completion: (Error?) -> Void){
+        completion(nil)
+    }
+}
+
+class View{
+    var backgroundColor = "white" {
+        didSet{
+            print(backgroundColor)
+        }
+    }
+    var button: Button
+    
+    init(button: Button) {
+        self.button = button
+        self.button.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(didButtonTapped), name: NSNotification.Name("buttonTapped"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(didButtonUnTapped), name: NSNotification.Name("buttonUnTapped"), object: nil)
+    }
+    
+    @objc
+    func didButtonTapped() {
+        print("Background color: \(backgroundColor)")
+    }
+    
+    @objc
+    func didButtonUnTapped() {
+        print("Background color: \(backgroundColor)")
+    }
+}
+
+extension View: ButtonDelegate {
+    func didTapButton(_ sender: Button) {
+        backgroundColor = "red"
+    }
+    
+    func didUnTapButton(_ sender: Button) {
+        backgroundColor = "blue"
     }
 }
 
 var button = Button()
 
+var view = View(button: button)
+
+button.didTapped = {
+    if button.isTapped{
+        firstUser.age += 1
+        print("Button Tapped")
+        print(firstUser)
+    } else {
+        firstUser.age -= 1
+        print("BUTTON RELEASED")
+        print(firstUser)
+    }
+}
+
 button.tap()
 
-if button.isTapped{
-    print("Button Tapped")
+button.untap()
+
+button.didActive() {
+    error in print(error?.localizedDescription)
 }
+
