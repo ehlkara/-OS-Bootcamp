@@ -147,7 +147,7 @@ let fruits = ["apple","strawberry"]
 
 let result = fruits.firstIndex(of: "apple")
 
-print(result)
+print(result as Any)
 
 // MARK: - Error Handling
 
@@ -218,3 +218,104 @@ let adminUser = AdminUser(id: "123675", username: "Steve", age: 5)
 let adminProfile = Profile(user: adminUser)
 
 adminProfile.printProfile()
+
+
+//-------------------------------------------------------
+// MARK: - Generics
+
+protocol Provider{
+    var baseUrl: String{get}
+    var endPoint: String{get}
+    var parameters: [String:String] {get}
+}
+
+enum InstagramProvider{
+    case getRecentPosts
+    case getProfile
+    case search(text: String)
+    
+    init?() {
+        self.init(rawValue: "/getProfile")
+    }
+}
+
+extension InstagramProvider:RawRepresentable{
+    typealias RawValue =  String
+    
+    var rawValue: RawValue {
+        endPoint
+    }
+    init?(rawValue: RawValue) {
+        self.init()
+        switch rawValue {
+        case "/getRecentPosts":
+            self = .getRecentPosts
+        case "/getProfile":
+            self = .getProfile
+        default:
+            break
+        }
+    }
+}
+
+extension InstagramProvider:Provider {
+    var baseUrl: String {
+        "https://instagram.com"
+    }
+    
+    var endPoint: String {
+        switch self {
+        case .getProfile:
+            return "/getProfile"
+        case .getRecentPosts:
+            return "/getRecentPhotos"
+        case .search:
+            return "/search"
+        }
+    }
+    
+    var parameters: [String : String] {
+        [:]
+    }
+}
+
+let instaProvider = InstagramProvider()
+
+class NetworkProvider<P: RawRepresentable> {
+    let provider: P
+    
+    init(provider: P){
+        self.provider = provider
+    }
+    
+    func performRequest(_ request:P){
+        print(request.rawValue)
+    }
+}
+
+let networkProvider = NetworkProvider<InstagramProvider>(provider: instaProvider!)
+
+networkProvider.performRequest(.getProfile)
+
+//-------------------------------------------------------
+// MARK: - Closure, Delegate, Notification Center
+
+class Button {
+var isTapped: Bool = false
+    
+    func tap () {
+        isTapped = true
+    }
+    
+    func untap() {
+        isTapped = false
+    }
+}
+
+var button = Button()
+
+button.tap()
+
+if button.isTapped{
+    print("Button Tapped")
+}
