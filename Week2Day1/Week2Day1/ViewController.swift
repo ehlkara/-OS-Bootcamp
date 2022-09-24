@@ -9,14 +9,28 @@ import UIKit
 
 final class ViewController: UIViewController {
     
-//    var displayValue: String? {
-//        get{
-//            displayLabel.text
-//        }
-//        set {
-//            displayLabel.text?.append(newValue ?? "")
-//        }
-//    }
+    var didOperrandButtonTapped = true
+    
+    var result: Double = .zero {
+        didSet{
+            displayLabel.text = "\(result)"
+        }
+    }
+    
+    var numbers = [Double]() {
+        didSet {
+            print(numbers)
+        }
+    }
+    
+    var displayValue: String? {
+        get{
+            displayLabel.text
+        }
+        set {
+            displayLabel.text?.append(newValue ?? "")
+        }
+    }
 
     @IBOutlet private weak var displayLabel: UILabel!
     override func viewDidLoad() {
@@ -42,7 +56,7 @@ final class ViewController: UIViewController {
             return
         }
         
-        displayLabel.text! += "\(digit)"
+        displayValue = currentTitle
     }
 }
 
