@@ -56,15 +56,87 @@
 		EFCA34C628E815C5005377A0 /* ITunes Client App */ = {
 			isa = PBXGroup;
 			children = (
-				EFCA34C728E815C5005377A0 /* AppDelegate.swift */,
-				EFCA34C928E815C5005377A0 /* SceneDelegate.swift */,
-				EFCA34CB28E815C5005377A0 /* ViewController.swift */,
-				EFCA34CD28E815C5005377A0 /* Main.storyboard */,
-				EFCA34D028E815C6005377A0 /* Assets.xcassets */,
-				EFCA34D228E815C6005377A0 /* LaunchScreen.storyboard */,
-				EFCA34D528E815C6005377A0 /* Info.plist */,
+				EFCA34DC28E818CC005377A0 /* Screens */,
+				EFCA34DB28E818C6005377A0 /* App */,
 			);
 			path = "ITunes Client App";
+			sourceTree = "<group>";
+		};
+		EFCA34DB28E818C6005377A0 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EFCA34E328E819C4005377A0 /* Plists */,
+				EFCA34E228E819B8005377A0 /* View */,
+				EFCA34DE28E81907005377A0 /* Assets */,
+				EFCA34DD28E818E5005377A0 /* Delegates */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		EFCA34DC28E818CC005377A0 /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				EFCA34DF28E8191C005377A0 /* Main */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
+		EFCA34DD28E818E5005377A0 /* Delegates */ = {
+			isa = PBXGroup;
+			children = (
+				EFCA34C728E815C5005377A0 /* AppDelegate.swift */,
+				EFCA34C928E815C5005377A0 /* SceneDelegate.swift */,
+			);
+			path = Delegates;
+			sourceTree = "<group>";
+		};
+		EFCA34DE28E81907005377A0 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				EFCA34D028E815C6005377A0 /* Assets.xcassets */,
+			);
+			path = Assets;
+			sourceTree = "<group>";
+		};
+		EFCA34DF28E8191C005377A0 /* Main */ = {
+			isa = PBXGroup;
+			children = (
+				EFCA34E128E8193D005377A0 /* Controller */,
+				EFCA34E028E81930005377A0 /* View */,
+			);
+			path = Main;
+			sourceTree = "<group>";
+		};
+		EFCA34E028E81930005377A0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EFCA34CD28E815C5005377A0 /* Main.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EFCA34E128E8193D005377A0 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				EFCA34CB28E815C5005377A0 /* ViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		EFCA34E228E819B8005377A0 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				EFCA34D228E815C6005377A0 /* LaunchScreen.storyboard */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		EFCA34E328E819C4005377A0 /* Plists */ = {
+			isa = PBXGroup;
+			children = (
+				EFCA34D528E815C6005377A0 /* Info.plist */,
+			);
+			path = Plists;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
