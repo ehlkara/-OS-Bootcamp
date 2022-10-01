@@ -79,7 +79,6 @@ class Programmer: Equatable {
     static func printId() {
         print(id)
     }
-    
 }
 
 class iOSProgrammer:Programmer{
